@@ -14,13 +14,20 @@ x, y, velocity, git_box = 400, 400, 10, 40
 font = pygame.font.SysFont("Couries", git_box)
 spaceship = font.render("-^-", True, (255, 255, 255))
 bullet = font.render("!", True, (255, 255, 255))
+asteroid = font.render("#", True, (255, 255, 55))
 
 
 def generate_bullet(x: float, y: float):
     return (bullet, (x, y))
 
 
+def generate_asteroid(x: float, y: float):
+    return (asteroid, (x, y))
+
+
 bullets = []
+asteroids = []
+count = 0
 
 # Bucle del juego
 while running:
@@ -42,6 +49,25 @@ while running:
     if keys[pygame.K_DOWN] and y < SCREEN_HEIGHT - git_box:
         y += velocity
 
+    if count >= 15:
+        asteroids.append(
+            generate_asteroid(random.randint(git_box, SCREEN_WIDTH - git_box), git_box)
+        )
+        count = 0
+
+    count += 1
+
+    if len(asteroids) > 0:
+        for i, item in enumerate(asteroids):
+            surface, position = item
+            if position[1] + velocity < SCREEN_HEIGHT:
+                asteroids[i] = (
+                    surface,
+                    (position[0], (position[1] + velocity)),
+                )
+            else:
+                running = False
+
     if len(bullets) > 0:
         for i, item in enumerate(bullets):
             surface, position = item
@@ -57,6 +83,7 @@ while running:
 
     screen.blit(spaceship, (x, y))  # Renderizamos la nave espacial
     screen.blits(bullets)  # Renderizamos las balas
+    screen.blits(asteroids)  # Renderizamos los asteroides
 
     pygame.display.flip()  # Actualizamos la pantalla
     clock.tick(30)  # Limitamos a 60 FPS
