@@ -43,8 +43,8 @@ while running:
         y += velocity
 
     if len(bullets) > 0:
-        for i in range(0, len(bullets)):
-            surface, position = bullets[i]
+        for i, item in enumerate(bullets):
+            surface, position = item
             if position[1] - velocity < 0:
                 bullets.pop(i)
             else:
