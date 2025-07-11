@@ -49,7 +49,7 @@ while running:
     if keys[pygame.K_DOWN] and y < SCREEN_HEIGHT - git_box:
         y += velocity
 
-    if count >= 15:
+    if count >= 25:
         asteroids.append(
             generate_asteroid(random.randint(git_box, SCREEN_WIDTH - git_box), git_box)
         )
@@ -73,11 +73,25 @@ while running:
             surface, position = item
             if position[1] - velocity < 0:
                 bullets.pop(i)
+                pass
             else:
                 bullets[i] = (
                     surface,
                     (position[0], (position[1] - velocity)),
                 )
+
+            bullet_rect = pygame.Rect(
+                position[0], position[1] - velocity, git_box, git_box
+            )
+
+            for j, item_2 in enumerate(asteroids):
+                surface_2, position_2 = item_2
+                asteroid_rect = pygame.Rect(
+                    position_2[0], position_2[1], git_box, git_box
+                )
+                if asteroid_rect.colliderect(bullet_rect):
+                    bullets.pop(i)
+                    asteroids.pop(j)
 
     screen.fill((0, 0, 0))  # Color de la pantalla
 
