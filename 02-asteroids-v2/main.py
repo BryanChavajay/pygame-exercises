@@ -55,6 +55,22 @@ class Bullet:
         return pygame.Rect(self.x, self.y, GIT_BOX, GIT_BOX)
 
 
+class Asteroid:
+    def __init__(self):
+        self.x = random.randint(GIT_BOX, SCREEN_WIDTH - GIT_BOX)
+        self.y = GIT_BOX
+        self.surface = font.render("#", True, WHITE)
+
+    def draw(self):
+        screen.blit(self.surface, (self.x, self.y))
+
+    def move(self):
+        self.y -= VELOCITY
+
+    def get_rect(self):
+        return pygame.Rect(self.x, self.y, GIT_BOX, GIT_BOX)
+
+
 starship = Starship()
 
 
