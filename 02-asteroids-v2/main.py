@@ -39,6 +39,22 @@ class Starship:
         return pygame.Rect(self.x, self.y, 3 * GIT_BOX, GIT_BOX)
 
 
+class Bullet:
+    def __init__(self, x: int, y: int):
+        self.x = x
+        self.y = y
+        self.surface = font.render("!", True, WHITE)
+
+    def draw(self):
+        screen.blit(self.surface, (self.x, self.y))
+
+    def move(self):
+        self.y -= VELOCITY
+
+    def get_rect(self):
+        return pygame.Rect(self.x, self.y, GIT_BOX, GIT_BOX)
+
+
 starship = Starship()
 
 
