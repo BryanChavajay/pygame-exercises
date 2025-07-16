@@ -65,7 +65,7 @@ class Asteroid:
         screen.blit(self.surface, (self.x, self.y))
 
     def move(self):
-        self.y -= VELOCITY
+        self.y += VELOCITY
 
     def get_rect(self):
         return pygame.Rect(self.x, self.y, GIT_BOX, GIT_BOX)
