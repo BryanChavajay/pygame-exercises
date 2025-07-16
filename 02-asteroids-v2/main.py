@@ -35,6 +35,9 @@ class Starship:
         if keys[pygame.K_s] and self.y < SCREEN_HEIGHT:
             self.y += self.velocity
 
+    def get_rect(self):
+        return pygame.Rect(self.x, self.y, 3 * GIT_BOX, GIT_BOX)
+
 
 starship = Starship()
 
