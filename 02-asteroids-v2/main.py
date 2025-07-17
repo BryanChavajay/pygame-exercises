@@ -73,6 +73,8 @@ class Asteroid:
 
 starship = Starship()
 bullets: list[Bullet] = []
+asteroids_time = 0
+asteroids: list[Asteroid] = []
 
 
 while running:
@@ -95,9 +97,25 @@ while running:
         else:
             bullet.draw()
 
+    if asteroids_time >= 50:
+        asteroids.append(Asteroid())
+        asteroids_time = 0
+    else:
+        asteroids_time += 1
+
+    for asteroid in asteroids:
+        asteroid.move()
+        asteroid.draw()
+        if asteroid.y >= SCREEN_HEIGHT:
+            running = False
+        for bullet in bullets:
+            if bullet.get_rect().colliderect(asteroid.get_rect()):
+                bullets.remove(bullet)
+                asteroids.remove(asteroid)
+
     starship.draw()
 
     pygame.display.flip()
-    clock.tick(60)
+    clock.tick(30)
 
 pygame.quit()
