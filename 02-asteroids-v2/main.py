@@ -8,6 +8,7 @@ HIT_BOX = 40
 VELOCITY = 10
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+HOME, IN_GAME, GAME_OVER = "HOME", "INGAME", "GAME_OVER"
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
@@ -75,6 +76,10 @@ starship = Starship()
 bullets: list[Bullet] = []
 asteroids_time = 0
 asteroids: list[Asteroid] = []
+status = HOME
+msg_welcome = font.render(
+    "PRECIONA LA TECLA [Y] PARA COMENZAR EL JUEGO", True, WHITE
+)
 
 
 while running:
@@ -82,38 +87,48 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-        if event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
+        if (
+            event.type == pygame.KEYUP
+            and event.key == pygame.K_SPACE
+            and status == IN_GAME
+        ):
             bullets.append(Bullet(starship.x + (HIT_BOX / 3), starship.y - HIT_BOX))
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_y and status == HOME:
+            status = IN_GAME
 
     keys_pressed = pygame.key.get_pressed()
-    starship.move(keys_pressed)
 
     screen.fill(BLACK)
 
-    for bullet in bullets:
-        bullet.move()
-        if bullet.y <= 0:
-            bullets.remove(bullet)
-        else:
-            bullet.draw()
+    if status == HOME:
+        screen.blit(msg_welcome, (40, 380))
+    elif status == IN_GAME:
+        starship.move(keys_pressed)
 
-    if asteroids_time >= 50:
-        asteroids.append(Asteroid())
-        asteroids_time = 0
-    else:
-        asteroids_time += 1
-
-    for asteroid in asteroids:
-        asteroid.move()
-        asteroid.draw()
-        if asteroid.y >= SCREEN_HEIGHT:
-            running = False
         for bullet in bullets:
-            if bullet.get_rect().colliderect(asteroid.get_rect()):
+            bullet.move()
+            if bullet.y <= 0:
                 bullets.remove(bullet)
-                asteroids.remove(asteroid)
+            else:
+                bullet.draw()
 
-    starship.draw()
+        if asteroids_time >= 50:
+            asteroids.append(Asteroid())
+            asteroids_time = 0
+        else:
+            asteroids_time += 1
+
+        for asteroid in asteroids:
+            asteroid.move()
+            asteroid.draw()
+            if asteroid.y >= SCREEN_HEIGHT:
+                running = False
+            for bullet in bullets:
+                if bullet.get_rect().colliderect(asteroid.get_rect()):
+                    bullets.remove(bullet)
+                    asteroids.remove(asteroid)
+
+        starship.draw()
 
     pygame.display.flip()
     clock.tick(30)
