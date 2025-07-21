@@ -14,6 +14,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 running = True
 font = pygame.font.SysFont("Couries", HIT_BOX)
+font_s = pygame.font.SysFont("Couries", int(HIT_BOX / 2))
 
 
 class Starship:
@@ -77,9 +78,11 @@ bullets: list[Bullet] = []
 asteroids_time = 0
 asteroids: list[Asteroid] = []
 status = HOME
-msg_welcome = font.render(
-    "PRECIONA LA TECLA [Y] PARA COMENZAR EL JUEGO", True, WHITE
+msg_welcome = font.render("PRECIONA LA TECLA [Y] PARA COMENZAR EL JUEGO", True, WHITE)
+msg_move_keys = font_s.render(
+    "Utiliza las teclas [a][s][d][w] para moverte.", True, WHITE
 )
+msg_shoot_key = font_s.render("Utiliza la tecla de espacio para disparar.", True, WHITE)
 
 
 while running:
@@ -102,6 +105,8 @@ while running:
 
     if status == HOME:
         screen.blit(msg_welcome, (40, 380))
+        screen.blit(msg_move_keys, (40, 720))
+        screen.blit(msg_shoot_key, (40, 760))
     elif status == IN_GAME:
         starship.move(keys_pressed)
 
