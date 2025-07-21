@@ -78,6 +78,8 @@ bullets: list[Bullet] = []
 asteroids_time = 0
 asteroids: list[Asteroid] = []
 status = HOME
+score: int = 0
+
 msg_welcome = font.render("PRECIONA LA TECLA [Y] PARA COMENZAR EL JUEGO", True, WHITE)
 msg_move_keys = font_s.render(
     "Utiliza las teclas [a][s][d][w] para moverte.", True, WHITE
@@ -86,6 +88,7 @@ msg_shoot_key = font_s.render("Utiliza la tecla de espacio para disparar.", True
 
 
 while running:
+    msg_score = font_s.render(f"SCORE: {score}", True, WHITE)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -108,6 +111,7 @@ while running:
         screen.blit(msg_move_keys, (40, 720))
         screen.blit(msg_shoot_key, (40, 760))
     elif status == IN_GAME:
+        screen.blit(msg_score, (4,4))
         starship.move(keys_pressed)
 
         for bullet in bullets:
@@ -134,6 +138,7 @@ while running:
                 if bullet.get_rect().colliderect(asteroid.get_rect()):
                     bullets.remove(bullet)
                     asteroids.remove(asteroid)
+                    score += 20
 
         starship.draw()
 
