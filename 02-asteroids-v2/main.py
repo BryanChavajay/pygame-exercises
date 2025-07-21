@@ -117,7 +117,7 @@ while running:
             else:
                 bullet.draw()
 
-        if asteroids_time >= 50:
+        if asteroids_time >= 47:
             asteroids.append(Asteroid())
             asteroids_time = 0
         else:
@@ -127,6 +127,8 @@ while running:
             asteroid.move()
             asteroid.draw()
             if asteroid.y >= SCREEN_HEIGHT:
+                running = False
+            if asteroid.get_rect().colliderect(starship.get_rect()):
                 running = False
             for bullet in bullets:
                 if bullet.get_rect().colliderect(asteroid.get_rect()):
