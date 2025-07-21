@@ -30,11 +30,11 @@ class Starship:
     def move(self, keys):
         if keys[pygame.K_a] and self.x > 0:
             self.x -= self.velocity
-        if keys[pygame.K_d] and self.x < SCREEN_WIDTH:
+        if keys[pygame.K_d] and self.x < SCREEN_WIDTH - HIT_BOX:
             self.x += self.velocity
         if keys[pygame.K_w] and self.y > 0:
             self.y -= self.velocity
-        if keys[pygame.K_s] and self.y < SCREEN_HEIGHT:
+        if keys[pygame.K_s] and self.y < SCREEN_HEIGHT - HIT_BOX:
             self.y += self.velocity
 
     def get_rect(self):
@@ -111,7 +111,7 @@ while running:
         screen.blit(msg_move_keys, (40, 720))
         screen.blit(msg_shoot_key, (40, 760))
     elif status == IN_GAME:
-        screen.blit(msg_score, (4,4))
+        screen.blit(msg_score, (4, 4))
         starship.move(keys_pressed)
 
         for bullet in bullets:
