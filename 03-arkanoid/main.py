@@ -2,6 +2,7 @@ import pygame
 
 import config
 from entities.starbase import Starbase
+from entities.ball import Ball
 
 screen = pygame.display.set_mode((config.SCREEN_WIDTH, config.SCREEN_HEIGHT))
 pygame.display.set_caption("Arkanoid")
@@ -13,6 +14,7 @@ background_image = pygame.image.load(config.paths["background"])
 
 # Entities
 starbase = Starbase()
+ball = Ball()
 
 
 running = True
@@ -28,6 +30,11 @@ while running:
 
     starbase.move(keys_pressed)
     starbase.draw(screen)
+    ball.move()
+    ball.draw(screen)
+
+    if ball.get_rect().colliderect(starbase.get_rect()):
+        ball.velocity_y = -ball.velocity_y
 
     pygame.display.flip()
 

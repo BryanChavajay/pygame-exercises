@@ -11,4 +11,5 @@ FPS = 30
 paths = {
     "background": os.path.join(os.getcwd(), "03-arkanoid", "assets", "background.png"),
     "starbase": os.path.join(os.getcwd(), "03-arkanoid", "assets", "starbase.png"),
+    "ball": os.path.join(os.getcwd(), "03-arkanoid", "assets", "ball.png"),
 }
