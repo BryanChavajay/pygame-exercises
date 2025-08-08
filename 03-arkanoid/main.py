@@ -36,6 +36,9 @@ while running:
     if ball.get_rect().colliderect(starbase.get_rect()):
         ball.velocity_y = -ball.velocity_y
 
+    if ball.y >= config.SCREEN_HEIGHT:
+        running = False
+
     pygame.display.flip()
 
 pygame.quit()
