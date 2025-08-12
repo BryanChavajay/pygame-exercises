@@ -6,7 +6,7 @@ import config
 class Ball:
     def __init__(self) -> None:
         self.x = config.SCREEN_WIDTH // 2
-        self.y = config.SCREEN_HEIGHT - 150
+        self.y = config.SCREEN_HEIGHT - 135
         self.surface = pygame.image.load(config.paths["ball"])
         self.velocity_x = config.VELOCITY
         self.velocity_y = -config.VELOCITY

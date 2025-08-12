@@ -15,3 +15,8 @@ class Brick:
 
     def get_rect(self):
         return self.surface.get_rect(topleft=(self.x, self.y))
+
+    def hit(self):
+        self.life -= 1
+        if self.life <= 0:
+            self.life = 0
