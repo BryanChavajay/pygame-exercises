@@ -3,6 +3,7 @@ import pygame
 import config
 from entities.starbase import Starbase
 from entities.ball import Ball
+from generatebricks import generate_bricks
 
 screen = pygame.display.set_mode((config.SCREEN_WIDTH, config.SCREEN_HEIGHT))
 pygame.display.set_caption("Arkanoid")
@@ -16,6 +17,7 @@ background_image = pygame.image.load(config.paths["background"])
 starbase = Starbase()
 ball = Ball()
 
+bricks = generate_bricks(cols=config.BRICK_COLS, rows=config.BRICK_ROWS)
 
 running = True
 while running:
@@ -29,8 +31,12 @@ while running:
     keys_pressed = pygame.key.get_pressed()
 
     starbase.move(keys_pressed)
-    starbase.draw(screen)
     ball.move()
+
+    for brick in bricks:
+        brick.draw(screen)
+
+    starbase.draw(screen)
     ball.draw(screen)
 
     if ball.get_rect().colliderect(starbase.get_rect()):

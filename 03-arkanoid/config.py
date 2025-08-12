@@ -20,3 +20,9 @@ paths = {
     "pink_brick": os.path.join(ASSETS_PATH, "pink_brick.png"),
     "red_brick": os.path.join(ASSETS_PATH, "red_brick.png"),
 }
+
+# Brick configuration
+BRICK_ROWS = 8
+BRICK_COLS = 4
+POSITION_X_FIRST_BRICK = 80
+POSITION_Y_FIRST_BRICK = 50
